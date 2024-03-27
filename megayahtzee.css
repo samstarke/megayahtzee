@@ -1,0 +1,313 @@
+body {
+    background-color: #585858;
+    color: #fff;
+    font-family: "MS PGothic", sans-serif;
+    font-size: 12px;
+  }
+  
+  table {
+    border-collapse: collapse;
+  }
+  
+  table, th, td {
+    border: 1px solid #000;
+    background-color: #fff;
+    margin-top: 1px;
+    height: 100%;
+  }
+  
+  th {
+    border: 1px solid #000;
+  }
+  
+  th, td {
+    padding-top:3px;
+    padding-bottom:2px;
+    padding-left: 3px;
+  }
+  
+  tbody th {
+    color: #ffffff;
+    background-color: #000;
+  }
+  
+  td {
+    color: #000;
+  }
+
+  .score {
+    text-align: center;
+    text-indent: -2px;
+  }
+
+  .reserved-dice-area {
+    text-align: center;
+  }
+
+  .dice {
+    position: relative;
+    z-index: 1;
+  }
+
+  
+
+  #ssms {
+    background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  #gt {
+    background: linear-gradient(to right, #ffffff, #9b5300);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  #dice-container-1 {
+    position: relative;
+    top: 88px;
+    left: 315px;
+  }
+
+  #dice-container-2 {
+    position: relative;
+    top: 89px;
+    left: 285px;
+  }
+
+  #dice-container-3 {
+    position: relative;
+    top: 90px;
+    left: 315px;
+  }
+
+  #dice-container{
+    left:50px;
+  }
+  
+
+
+.clickable {
+    cursor: pointer;
+    color:#888;
+}
+.clickable:hover {
+  cursor: pointer;
+  color: #000000;
+  background-color: #f98f36 !important;
+}
+.selected {
+    text-decoration: none;
+    cursor: default;
+    font-weight: bold;
+    background-color: #e9e9e9 !important;
+}
+
+#scorecard-container {
+    display: flex;
+    width: 744px;
+    gap: 240px;
+    left:2px;
+
+    position: relative;
+    overflow: visible;
+  }
+
+table {
+    flex: 1;
+    margin: 0 10px;
+}
+
+table {
+    width: 50%;
+}
+  
+.scorecard-section:not(:last-child) {
+    padding-right: 20px;
+}
+
+.score{
+  width: 30px;
+  
+}
+
+#dice-game-area {
+  position: relative;
+  height: 150px;
+  margin-bottom: 20px;
+}
+
+#scorecard-container {
+  position: absolute;
+  top:12px;
+}
+
+#left-scorecard {
+  border:#000 solid 4px;
+}
+
+#right-scorecard {
+  border:#000 solid 4px;
+}
+
+#roll-button {
+  font-family: "MS PGothic", sans-serif;
+  top:12px;
+  left: 256px;
+  width: 112px;
+  height: 32px;
+  z-index:1;
+  position: absolute;
+  padding: 4px 6px;
+  background-color: rgb(255, 255, 255);
+  border: 1px outset #ffffff;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+
+#roll-button:hover {
+  background-color: rgb(214, 214, 214);
+}
+
+
+#sort-button {
+  font-family: "MS PGothic", sans-serif;
+  top:12px;
+  left: 381px;
+  width: 112px;
+  height: 32px;
+  z-index:1;
+  position: absolute;
+  padding: 4px 6px;
+  background-color: rgb(255, 255, 255);
+  border: 1px outset #ffffff;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+
+#sort-button:hover {
+  background-color: rgb(232, 232, 232);
+}
+
+#total-score-container{
+  font-size: 200%;
+  position:absolute;
+  left:300px;
+  top:300px;
+  width: 200px;
+  z-index: 1;
+}
+
+.tooltip-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  opacity: 85%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  color:#000;
+  z-index: 100;
+  text-align: center;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  min-width: 340px;
+  max-width:340px;
+  height: auto;
+  
+}
+
+.tooltip-content img {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+}
+
+.close-btn {
+  position: absolute;
+  right: 2px;
+  cursor: pointer;
+  font-size: 120%;
+}
+
+#background-selector-container {
+  font-family: "MS PGothic", sans-serif;
+  font-size: 12px;
+  position: absolute;
+  top:290px;
+  width: 236px;
+  left: 255px;
+  z-index: 3;
+  padding: 10px;
+}
+
+#background-selector {
+  font-family: "MS PGothic", sans-serif;
+  font-size: 100%;
+  top:18px;
+  left: 1px;
+  width: 236px;
+  height: 24px;
+  padding-bottom:2px;
+  z-index:1;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  border: 1px outset #ffffff;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+
+
+#roll-button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+#sort-button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+#score-bonus {
+  cursor: default !important;
+  background-color: #fff;
+  color: #000;
+  visibility: hidden;
+}
+
+#score-bonus:hover {
+  background-color: #fff;
+  color: #000 !important;
+}
+
+.score.disabled {
+  background-color: #ffffff;
+  cursor: default;
+}
+
+.clickable {
+  cursor: pointer !important;
+}
+
+#score-total {
+  font-size: 12px !important;
+}

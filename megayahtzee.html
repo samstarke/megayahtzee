@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>??? | Megayahtzee</title>
+        <link rel="stylesheet" href="megayahtzee.css" />
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@326&family=Silkscreen:wght@400;700&display=swap');
+        </style>
+    </head>
+    <body>
+        <div id="game-container">
+            <button id="start-game" style="display:none;">Start New Game</button>
+            <div id="player-container">
+            </div>
+            <div id="game-link-container" style="display: none;">
+                <p>Share this game link with your friends:</p>
+                <input type="text" id="game-link" readonly />
+            </div>
+            <img src="assets/megayahtzee/dice-container.png" style="position:absolute; left:264px; top:68px;">
+            <div id="dice-game-area">
+                <div id="container-dice">
+                    <div id="dice-container-1">
+                        <!-- First Row -->
+                        <img id="dice-1" class="dice" src="assets/megayahtzee/dice-blank.png" alt="Dice 1">
+                        <img id="dice-2" class="dice" src="assets/megayahtzee/dice-blank.png" alt="Dice 2" style="margin-left:6px;">
+                    </div>
+                    <div id="dice-container-2">
+                        <!-- Second Row (Middle Row for the star formation) -->
+                        <img id="dice-3" class="dice" src="assets/megayahtzee/dice-blank.png" alt="Dice 3">
+                        <img id="dice-4" class="dice" src="assets/megayahtzee/dice-blank.png" alt="Dice 4" style="margin-left:6px;">
+                        <img id="dice-5" class="dice" src="assets/megayahtzee/dice-blank.png" alt="Dice 5" style="margin-left:7px;">
+                    </div>
+                    <div id="dice-container-3">
+                        <!-- Third Row -->
+                        <img id="dice-6" class="dice" src="assets/megayahtzee/dice-blank.png" alt="Dice 6">
+                        <img id="dice-7" class="dice" src="assets/megayahtzee/dice-blank.png" alt="Dice 7" style="margin-left:6px;">
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                <button id="roll-button"><b>Roll!</b></button>
+                <button id="sort-button"><b>Sort Them!</b></button>
+
+                <div id="total-score-container"></div>
+
+                <div id="background-selector-container" style="text-align: center;">
+                    <select id="background-selector">
+                        <option value="default"><b>Select a Background</b></option>
+                        <option value="green.png">Green</option>
+                        <option value="red.png">Red</option>
+                        <option value="blue.png">Blue</option>
+                        <option value="purple.png">Purple</option>
+                        <option value="tan.png">Tan</option>
+                        <option value="grey.png">Grey</option>
+                        <option value="dark-grey.png">Dark Grey</option>
+                        <option value="black.png">Black</option>
+                        <option value="soft-wood.png">Soft Wood</option>
+                        <option value="hardwood.png">Hardwood</option>
+                        <option value="light-hardwood.png">Light Hardwood</option>
+                        <option value="heavy-wood.png">Dark Wood</option>
+                        <option value="diagonal-wood.png">Angled Wood</option>
+                        <option value="wood.png">Wood</option>
+                        <option value="log.png">Log</option>
+                        <option value="orange-striped.png">Bamboo</option>
+                        <option value="tile.png">Tile</option>
+                        <option value="grey-tile.png">Grey Tile</option>
+                        <option value="grid.png">Grid Tile</option>
+                        <option value="light-green-tile.png">Light Green Tile</option>
+                        <option value="purple-eye.png">Purple Tile</option>
+                        <option value="tan-tile.png">Tan Tile</option>
+                        <option value="teal-tile.png">Teal Tile</option>
+                        <option value="yellow-tile.png">Yellow Tile</option>
+                        <option value="square-tile.png">Square Tile</option>
+                        <option value="diamond-tile.png">Diamond Tile</option>
+                        <option value="blue-diamond.png">Blue Diamond Tile</option>
+                        <option value="basket-weave.png">Basket Weave Tile</option>
+                        <option value="herringbone.png">Herringbone Tile</option>
+                        <option value="blue-checkerboard.png">Blue Checkerboard Tile</option>
+                        <option value="red-checkerboard.png">Red Checkerboard Tile</option>
+                        <option value="orange-checkerboard.png">Orange Checkerboard Tile</option>
+                        <option value="game-board.png">Game Board Tile</option>
+                        <option value="angled-game-board.png">Angled Game Board Tile</option>
+                        <option value="brick.png">Brick</option>
+                        <option value="ice.png">Ice</option>
+                        <option value="steel.png">Steel</option>
+                        <option value="stone.png">Cobblestone</option>
+                        <option value="carpet.png">Carpet</option>
+                        <option value="dirt.png">Rug</option>
+                    </select>
+                </div>
+
+                <div id="tip" style="
+                position:absolute;
+                top:332px;
+                z-index:2;
+                left:256px;
+                width:236px;">
+                    <p><b>Tip: </b>Click on any score type on the scorecard to reveal more information!</p>
+                </div>
+
+                <div id="scorecard-container">
+                    <table id="left-scorecard">
+                    <tbody>
+                        <!-- Basic Tallies -->
+                        <tr>
+                            <th colspan="2" style="padding:1px; color:#9495fa">Basic Tallies</th>
+                        </tr>
+                        <!-- Aces -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-aces">Aces</td>
+                            <td id="score-aces" class="score"></td>
+                        </tr>
+                        <div id="tooltip-aces" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Aces are worth 1 point each. Count and add only Aces.</p>
+                            <img src="assets/megayahtzee/rolls/aces.png" alt="Aces" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all Aces</p>
+                        </div>
+                        
+                        <!-- Twos -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-twos">Twos</td>
+                            <td id="score-twos" class="score"></td>
+                        </tr>
+                        <div id="tooltip-twos" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Twos are worth 2 points each. Count and add only Twos.</p>
+                            <img src="assets/megayahtzee/rolls/twos.png" alt="Twos" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all Twos</p>
+                        </div>
+
+                        <!-- Threes -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-threes">Threes</td>
+                            <td id="score-threes" class="score"></td>
+                        </tr>
+                        <div id="tooltip-threes" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Threes are worth 3 points each. Count and add only Threes.</p>
+                            <img src="assets/megayahtzee/rolls/threes.png" alt="Threes" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all Threes</p>
+                        </div>
+
+                        <!-- Fours -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-fours">Fours</td>
+                            <td id="score-fours" class="score"></td>
+                        </tr>
+                        <div id="tooltip-fours" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Fours are worth 4 points each. Count and add only Fours.</p>
+                            <img src="assets/megayahtzee/rolls/fours.png" alt="Fours" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all Fours</p>
+                        </div>
+
+                        <!-- Fives -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-fives">Fives</td>
+                            <td id="score-fives" class="score"></td>
+                        </tr>
+                        <div id="tooltip-fives" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Fives are worth 5 points each. Count and add only Fives.</p>
+                            <img src="assets/megayahtzee/rolls/fives.png" alt="Fives" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all Fives</p>
+                        </div>
+
+                        <!-- Sixes -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-sixes">Sixes</td>
+                            <td id="score-sixes" class="score"></td>
+                        </tr>
+                        <div id="tooltip-sixes" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Sixes are worth 6 points each. Count and add only Sixes.</p>
+                            <img src="assets/megayahtzee/rolls/sixes.png" alt="Sixes" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all Sixes</p>
+                        </div>
+
+                        <!-- Sevens -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-sevens">Sevens</td>
+                            <td id="score-sevens" class="score"></td>
+                        </tr>
+                        <div id="tooltip-sevens" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Sevens are worth 7 points each. Count and add only Sevens.</p>
+                            <img src="assets/megayahtzee/rolls/sevens.png" alt="Sevens" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all Sevens</p>
+                        </div>
+
+                        <!-- Bonus -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-bonus">Bonus</td>
+                            <td id="score-bonus" style="
+                            cursor: default !important;
+                            background-color: #fff !important;
+                            text-align: center;
+                            visibility: hidden;"></td>
+                        </tr>
+                        <div id="tooltip-bonus" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Total of Basic Tallies is 112 or greater. <br>Equivalent to 4 of a Kind in each tally.</p>
+                            <p><strong>Score: </strong>75</p>
+                        </div>
+
+                        <!-- Common Combos -->
+                        <tr>
+                            <th colspan="2" style="color:#6dda8e">Common Combos</th>
+                        </tr>
+
+                        <!-- 4 of a Kind -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-4-of-a-kind">4 of a Kind</td>
+                            <td id="score-4-of-a-kind" class="score"></td>
+                        </tr>
+                        <div id="tooltip-4-of-a-kind" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Four dice of the same number.</p>
+                            <img src="assets/megayahtzee/rolls/4-of-a-kind.png" alt="4 of a Kind" style="align-items: center;">
+                            <p><strong>Score: </strong>(8 &times; Dice in 4-of-a-Kind) + Extras of the same Number</p>
+                        </div>
+
+                        <!-- 5 of a Kind -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-5-of-a-kind">5 of a Kind</td>
+                            <td id="score-5-of-a-kind" class="score"></td>
+                        </tr>
+                        <div id="tooltip-5-of-a-kind" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Five dice of the same number.</p>
+                            <img src="assets/megayahtzee/rolls/5-of-a-kind.png" alt="5 of a Kind" style="align-items: center;">
+                            <p><strong>Score: </strong>(10 &times; Dice in 5-of-a-Kind) + Extras of the same Number</p>
+                        </div>
+
+                        <!-- Full House -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-full-house">Full House</td>
+                            <td id="score-full-house" class="score"></td>
+                        </tr>
+                        <div id="tooltip-full-house" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Three dice of the same number and two dice of the same number.</p>
+                            <img src="assets/megayahtzee/rolls/full-house.png" alt="Full House" style="align-items: center;">
+                            <p><strong>Score: </strong>25</p>
+                        </div>
+
+                        <!-- Small Straight -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-small-straight">Small Straight</td>
+                            <td id="score-small-straight" class="score"></td>
+                        </tr>
+                        <div id="tooltip-small-straight" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Sequence of four consecutive numbers.</p>
+                            <img src="assets/megayahtzee/rolls/small-straight.png" alt="Small Straight" style="align-items: center;">
+                            <p><strong>Score: </strong>30</p>
+                        </div>
+
+                        <!-- Large Straight -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-large-straight">Large Straight</td>
+                            <td id="score-large-straight" class="score"></td>
+                        </tr>
+                        <div id="tooltip-large-straight" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Sequence of five consecutive numbers.</p>
+                            <img src="assets/megayahtzee/rolls/large-straight.png" alt="Large Straight" style="align-items: center;">
+                            <p><strong>Score: </strong>40</p>
+                        </div>
+
+                        <!-- Wildcard Scores -->
+                        <tr>
+                            <th colspan="2" style="color:#e8e04a">Wildcard Scores</th>
+                        </tr>
+
+                        <!-- Whatever -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-whatever">Whatever</td>
+                            <td id="score-whatever" class="score"></td>
+                        </tr>
+                        <div id="tooltip-whatever" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>"Eh, whatever".</p>
+                            <img src="assets/megayahtzee/rolls/whatever.png" alt="Whatever" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all dice</p>
+                        </div>
+
+                        <!-- Oddball -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-oddball">Oddball</td>
+                            <td id="score-oddball" class="score"></td>
+                        </tr>
+                        <div id="tooltip-oddball" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Count and add only odd-numbered dice.</p>
+                            <img src="assets/megayahtzee/rolls/oddball.png" alt="Oddball" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all odd-numbered dice</p>
+                        </div>
+
+                        <!-- Even Steven -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-even-steven">Even Steven</td>
+                            <td id="score-even-steven" class="score"></td>
+                        </tr>
+                        <div id="tooltip-even-steven" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Count and add only even-numbered dice.</p>
+                            <img src="assets/megayahtzee/rolls/even-steven.png" alt="Even Steven" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all even-numbered dice</p>
+                        </div>
+
+                        <!-- Prime Parade -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-prime-parade">Prime Parade</td>
+                            <td id="score-prime-parade" class="score"></td>
+                        </tr>
+                        <div id="tooltip-prime-parade" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Count and add only dice that are prime numbers.</p>
+                            <img src="assets/megayahtzee/rolls/prime-parade.png" alt="Prime Parade" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all dice that are prime numbers</p>
+                        </div>
+
+                        <!-- Binary Blast -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-binary-blast">Binary Blast</td>
+                            <td id="score-binary-blast" class="score"></td>
+                        </tr>
+                        <div id="tooltip-binary-blast" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Count and add only dice that are powers of 2.</p>
+                            <img src="assets/megayahtzee/rolls/binary-blast.png" alt="Binary Blast" style="align-items: center;">
+                            <p><strong>Score: </strong>Sum of all dice that are powers of 2</p>
+                        </div>
+                        </tbody>
+                    </table>
+
+
+                    <table id="right-scorecard" style="right:200px;">
+                        <tbody>
+                        <!-- Complex Clusters -->
+                        <tr><th colspan="2"  style="color:#d45555; padding-top:1px;">Complex Clusters</th></tr>
+
+                        <!-- Triple Double -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-triple-double">Triple Double</td>
+                            <td id="score-triple-double" class="score"></td>
+                        </tr>
+                        <div id="tooltip-triple-double" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Three different pairs of dice.</p>
+                            <img src="assets/megayahtzee/rolls/triple-double.png" alt="Triple Double" style="align-items: center;">
+                            <p><strong>Score: </strong>15 + (2 &times; Sum of each pair)</p>
+                        </div>
+
+                        <!-- Double Triple -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-double-triple">Double Triple</td>
+                            <td id="score-double-triple" class="score"></td>
+                        </tr>
+                        <div id="tooltip-double-triple" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Two different sets of three of a kind.</p>
+                            <img src="assets/megayahtzee/rolls/double-triple.png" alt="Double Triple" style="align-items: center;">
+                            <p><strong>Score: </strong>25 + (3 &times; Sum of each set)</p>
+                        </div>
+
+                        <!-- Full Full House -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-full-full-house">Full Full House</td>
+                            <td id="score-full-full-house" class="score"></td>
+                        </tr>
+                        <div id="tooltip-full-full-house" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Full house with an extra two pair.</p>
+                            <img src="assets/megayahtzee/rolls/full-full-house.png" alt="Full Full House" style="align-items: center;">
+                            <p><strong>Score: </strong>60</p>
+                        </div>
+
+                        <!-- Straight Straight -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-straight-straight">Straight Straight</td>
+                            <td id="score-straight-straight" class="score"></td>
+                        </tr>
+                        <div id="tooltip-straight-straight" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Two identical sequences of three consecutive numbers.</p>
+                            <img src="assets/megayahtzee/rolls/straight-straight.png" alt="Straight Straight" style="align-items: center;">
+                            <p><strong>Score: </strong>70</p>
+                        </div>
+
+                        <!-- Packed House -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-packed-house">Packed House</td>
+                            <td id="score-packed-house" class="score"></td>
+                        </tr>
+                        <div id="tooltip-packed-house" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Four dice of the same number and three dice of the same number.</p>
+                            <img src="assets/megayahtzee/rolls/packed-house.png" alt="Packed House" style="align-items: center;">
+                            <p><strong>Score: </strong>80</p>
+                        </div>
+
+                        <!-- Larger Straight -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-larger-straight">Larger Straight</td>
+                            <td id="score-larger-straight" class="score"></td>
+                        </tr>
+                        <div id="tooltip-larger-straight" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Sequence of six consecutive numbers.</p>
+                            <img src="assets/megayahtzee/rolls/larger-straight.png" alt="Larger Straight" style="align-items: center;">
+                            <p><strong>Score: </strong>90</p>
+                        </div>
+
+                        <!-- 6 of a Kind -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-6-of-a-kind">6 of a Kind</td>
+                            <td id="score-6-of-a-kind" class="score"></td>
+                        </tr>
+                        <div id="tooltip-6-of-a-kind" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Six dice of the same number.</p>
+                            <img src="assets/megayahtzee/rolls/6-of-a-kind.png" alt="6 of a Kind" style="align-items: center;">
+                            <p><strong>Score: </strong>100</p>
+                        </div>
+
+                        <!-- Super Special Mega Rolls -->
+                        <tr>
+                            <th colspan="2"><div id="ssms">Super Special Rolls</div></th>
+                        </tr>
+
+                        <!-- Party Boat -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-party-boat" style="color:#305d7c; 
+                            background-color:#f9ffff; 
+                            margin-top:0px;
+                            padding-top:1.3px;
+                            padding-left:3px;
+                            padding-bottom:1.3px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/boat.png">
+                            Party Boat</td>
+                            <td id="score-party-boat" class="score"></td>
+                        </tr>
+                        <div id="tooltip-party-boat" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Five dice of one number and two dice of a different number.</p>
+                            <img src="assets/megayahtzee/rolls/party-boat.png" alt="Party Boat" style="align-items: center;">
+                            <p><strong>Score: </strong>50 + (5 &times; Dice in 5-of-a-Kind) + (2 &times; Extras)</p>
+                        </div>
+
+                        <!-- Meteor Shower -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-meteor-shower" style="color:#510a13; 
+                            background-color:#fff9f9; 
+                            margin-top:0px;
+                            padding-top:1.3px;
+                            padding-left:3px;
+                            padding-bottom:1.3px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/meteor.png">
+                            Meteor Shower</td>
+                            <td id="score-meteor-shower" class="score"></td>
+                        </tr>
+                        <div id="tooltip-meteor-shower" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>A sequence of four consecutive numbers and at least three dice of the same number on the edge or outside of the sequence.</p>
+                            <img src="assets/megayahtzee/rolls/meteor-shower.png" alt="Meteor Shower" style="align-items: center;">
+                            <p><strong>Score: </strong>50 + (5 &times; Dice in 3-of-a-Kind) + (10 if 4-of-a-Kind)</p>
+                        </div>
+
+                        <!-- Great Pyramids -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-the-great-pyramids" style="color:#3c2b0c; 
+                            background-color:#fffcf7; 
+                            margin-top:0px;
+                            padding-top:1.8px;
+                            padding-left:3px;
+                            padding-bottom:1.8px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/pyramid.png">
+                            Great Pyramids</td>
+                            <td id="score-the-great-pyramids" class="score"></td>
+                        </tr>
+                        <div id="tooltip-the-great-pyramids" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Palindromic sequence of four consecutive numbers.</p>
+                            <img src="assets/megayahtzee/rolls/great-pyramids.png" alt="Great Pyramids" style="align-items: center;">
+                            <p><strong>Score: </strong>50 + (7 &times; Die at the "point" of the Pyramid)</p>
+                        </div>
+
+                        <!-- Meaning of Life -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-the-meaning-of-life" style="color:#351742; 
+                            background-color:#fdfaff; 
+                            margin-top:0px;
+                            padding-top:2.3px;
+                            padding-left:3px;
+                            padding-bottom:2.3px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/question.png">
+                            Meaning of Life</td>
+                            <td id="score-the-meaning-of-life" class="score"></td>
+                        </tr>
+                        <div id="tooltip-the-meaning-of-life" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>???</p>
+                            <img src="assets/megayahtzee/rolls/meaning-of-life.png" alt="Meaning of Life" style="align-items: center;">
+                            <p><strong>Score: </strong>64</p>
+                        </div>
+
+                        <!-- Lucky Sevens -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-lucky-sevens" style="color:#0c3a07; 
+                            background-color:#f7fff6; 
+                            margin-top:0px;
+                            padding-top:1.3px;
+                            padding-left:3px;
+                            padding-bottom:1.3px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/lucky.png">
+                            Lucky Sevens</td>
+                            <td id="score-lucky-sevens" class="score"></td>
+                        </tr>
+                        <div id="tooltip-lucky-sevens" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>All dice are multiples of seven.</p>
+                            <img src="assets/megayahtzee/rolls/lucky-sevens.png" alt="Meaning of Life" style="align-items: center;">
+                            <p><strong>Score: </strong>77</p>
+                        </div>
+
+                        <!-- Seventh Wheeling -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-seventh-wheeling" style="color:#11073a; 
+                            background-color:#f9f6ff; 
+                            margin-top:0px;
+                            padding-top:1.3px;
+                            padding-left:3px;
+                            padding-bottom:1.3px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/wheel.png">
+                            Seventh Wheeling</td>
+                            <td id="score-seventh-wheel" class="score"></td>
+                        </tr>
+                        <div id="tooltip-seventh-wheeling" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Three two pairs, where the extra die is a One.</p>
+                            <img src="assets/megayahtzee/rolls/seventh-wheeling.png" alt="Seventh Wheeling" style="align-items: center;">
+                            <p><strong>Score: </strong>85</p>
+                        </div>
+
+                        <!-- Comet in the Sky -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-comet-in-the-sky" style="color:#305d7c; 
+                            background-color:#f8ffff; 
+                            margin-top:0px;
+                            padding-top:1.3px;
+                            padding-left:3px;
+                            padding-bottom:1.3px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/comet.png">
+                            Comet in the Sky</td>
+                            <td id="score-comet-in-the-sky" class="score"></td>
+                        </tr>
+                        <div id="tooltip-comet-in-the-sky" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Sequence of five consecutive numbers and three Sevens.</p>
+                            <img src="assets/megayahtzee/rolls/comet-in-the-sky.png" alt="Comet in the Sky" style="align-items: center;">
+                            <p><strong>Score: </strong>96</p>
+                        </div>
+
+                        <!-- Odd One Out -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-odd-one-out" style="color:#3a071d; 
+                            background-color:#fff6fb; 
+                            margin-top:0px;
+                            padding-top:1.3px;
+                            padding-left:3px;
+                            padding-bottom:1.3px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/odd.png">
+                            Odd One Out</td>
+                            <td id="score-odd-one-out" class="score"></td>
+                        </tr>
+                        <div id="tooltip-odd-one-out" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Six of the same number, where the extra die is a One.</p>
+                            <img src="assets/megayahtzee/rolls/odd-one-out.png" alt="Odd One Out" style="align-items: center;">
+                            <p><strong>Score: </strong>111</p>
+                        </div>
+
+                        <!-- Largest Straight -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-largest-straight" style="color:#073a26; 
+                            background-color:#f6fdfb; 
+                            margin-top:0px;
+                            padding-top:1.3px;
+                            padding-left:3px;
+                            padding-bottom:1.3px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/straight.png">
+                            Largest Straight</td>
+                            <td id="score-largest-straight" class="score"></td>
+                        </tr>
+                        <div id="tooltip-largest-straight" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Sequence of seven consecutive numbers.</p>
+                            <img src="assets/megayahtzee/rolls/largest-straight.png" alt="Largest Straight" style="align-items: center;">
+                            <p><strong>Score: </strong>123</p>
+                        </div>
+
+                        <!-- Megayahtzee -->
+                        <tr>
+                            <td class="score-info" data-tooltip-id="tooltip-megayahtzee" style="color:#830a0a; 
+                            background-color:#fbe3d9; 
+                            margin-top:0px;
+                            padding-top:0.3px;
+                            padding-left:3px;
+                            padding-bottom:0.8px;
+                            vertical-align:middle;">
+                            <img src="assets/megayahtzee/woo.png">
+                            MEGAYAHTZEE</td>
+                            <td id="score-megayahtzee" class="score"></td>
+                        </tr>
+                        <div id="tooltip-megayahtzee" class="tooltip-content" style="display:none;">
+                            <span class="close-btn"><strong>&times;</strong></span>
+                            <p>Seven dice of the same number.</p>
+                            <img src="assets/megayahtzee/rolls/megayahtzee.png" alt="Largest Straight" style="align-items: center;">
+                            <p><strong>Score: </strong>200</p>
+                        </div>
+                        <tr>
+                            <th colspan="2"><div id="gt">Grand Total</div></th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" id="total-container" style="background-color:#fff; color:#000;"><span id="score-total" class="total"><strong>0</strong></span></th></th>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+            </div>
+                
+            
+        </div>
+        <script src="megayahtzee.js"></script>
+    </body>
+</html>
