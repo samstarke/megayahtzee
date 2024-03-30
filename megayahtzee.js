@@ -307,6 +307,7 @@ function calculatePotentialScores() {
         'comet-in-the-sky': calculateCometInTheSky(diceValues),
         'seventh-wheel': calculateSeventhWheel(diceValues),
         'odd-one-out': calculateOddOneOut(diceValues),
+        'fibonacci' : calculateFibonacci(diceValues),
         'largest-straight': calculateLargestStraight(diceValues),
         'megayahtzee': calculateMegayahtzee(diceValues),
     };
@@ -889,6 +890,22 @@ function calculateOddOneOut(diceValues) {
     }
 
     return hasSixOfAKind && hasOneAsExtra ? 111 : 0;
+}
+
+function calculateFibonacci(diceValues) {
+    const fibonacciSequence = [1, 1, 2, 3, 5];
+    let fibonacciCount = 0;
+
+    for(let i = 0; i < diceValues.length; i++) {
+        for(let j = 0; j < fibonacciSequence.length; j++) {
+            if(diceValues[i] == fibonacciSequence[j]) {
+                diceValues[i] = fibonacciSequence[j] = 0;
+                fibonacciCount++;
+                break;
+            }
+        }
+    }
+    return fibonacciCount == 5 && sum(diceValues) == 8 ? 112 : 0
 }
 
 function calculateLargestStraight(diceValues) {
