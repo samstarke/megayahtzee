@@ -436,6 +436,10 @@ function updateTotalScore() {
         totalScore += parseInt(scoreElement.textContent) || 0;
     });
 
+    // Update tooltip for Basic Tallies Bonus
+    const upperTotalDisplay = document.getElementById('upper-total-display');
+    upperTotalDisplay.textContent = upperSectionScore;
+
     document.getElementById('score-total').innerHTML = `<strong>${totalScore}</strong>`;
 }
 
